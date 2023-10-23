@@ -1,3 +1,155 @@
-wrapper {
-    gradleVersion = '8.3'
+
+plugins {
+    id 'com.android.application'
+    id("com.google.firebase.firebase-perf")
+     id("com.google.gms.google-services")
+    id ('idea')
+}
+idea {
+    module {
+        downloadJavadoc = true
+    }
+}
+android {
+    namespace 'lyn.bee.hive_record_app'
+    compileSdk 34
+    defaultConfig {
+        applicationId "lyn.bee.hive_record_app"
+        minSdk 29
+        targetSdk 34
+        versionCode 18
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndkVersion '25.2.9515693'
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+        sourceSets {
+            main {
+                resources.includes = [ 'src/main/assets/docx4j.properties' ]
+            }
+        }
+        buildFeatures {
+            viewBinding true
+        }
+        buildscript {
+            repositories {
+                maven { url 'https://jitpack.io' }
+                google()
+                mavenCentral()
+            }
+    }
+    buildscript {
+        repositories {
+            maven { url 'https://jitpack.io' }
+            mavenCentral()
+        }
+    }
+   buildscript {
+        repositories {
+            mavenCentral()
+            maven {
+                url 'https://esri.jfrog.io/artifactory/arcgis'
+            }
+        }
+    }
+
+
+
+        packagingOptions{
+            exclude 'META-INF/LGPL2.1'
+            exclude 'META-INF/LICENSE'
+            exclude 'META-INF/NOTICE'
+            exclude 'META-INF/DEPENDENCIES'
+            /*exclude 'META-INF/substrate/config/jniconfig-x86_64-ios.json'
+            exclude 'META-INF/substrate/config/reflectionconfig-aarch64-android.json'
+            exclude 'META-INF/substrate/config/reflectionconfig-x86_64-ios.json'
+            exclude 'META-INF/substrate/config/reflectionconfig-x86_64-darwin.json'
+            exclude 'META-INF/substrate/config/resourcebundles'*/
+            exclude'META-INF/LICENSE.md'
+            exclude 'META-INF/NOTICE.md'
+        }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            ndk {
+                debugSymbolLevel 'FULL'
+            }
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+    configurations {
+        natives
+    }
+    externalNativeBuild {
+        cmake {
+            version "3.22.1"
+        }
+
+    }
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
+    implementation("com.google.firebase:firebase-appcheck-debug")
+    implementation("com.google.firebase:firebase-perf-ktx")
+    implementation("com.google.firebase:firebase-functions")
+    implementation("com.google.firebase:firebase-inappmessaging-display")
+    implementation("com.google.firebase:firebase-analytics")
+// charts bug since the 20-09-23
+    /*implementation 'org.apache.poi:poi-ooxml:5.2.3'
+    implementation 'org.apache.poi:poi-scratchpad:5.2.3'
+    implementation 'org.apache.xmlbeans:xmlbeans:5.1.1'*/
+
+    implementation 'com.opencsv:opencsv:5.8'
+    implementation 'androidx.recyclerview:recyclerview:1.3.1'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'androidx.browser:browser:1.6.0'
+    implementation 'com.google.android.play:integrity:1.2.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.ar:core:1.40.0'
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+//noinspection GradleDependency
+    implementation 'com.google.android.material:material:1.9.0'
+}
+    buildFeatures {
+        viewBinding true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+   //noinspection GradlePath
+    //implementation files('C://Users/Usuario/AndroidStudioProjects/Arcgis_libs/arcgis-java-api.jar')
+    implementation 'com.esri.arcgisruntime:arcgis-android:100.15.3'
+    //noinspection GradlePath
+    implementation files('C://Users/Usuario/javafx-sdk-17.0.8/lib/javafx.graphics.jar')
+    implementation 'javax.xml.stream:stax-api:1.0-2'
+    implementation 'com.fasterxml:aalto-xml:1.3.1'
+    implementation files('libs/junit-4.12.jar')
+    implementation files('libs/log4j-1.2.17.jar')
+    implementation files('libs/jaxb-impl-2.3.0.1.jar')
+    implementation files('libs/jaxb-core-2.3.0.1.jar')
+    implementation files('libs/jaxb-api-2.3.0.jar')
+    //noinspection GradlePath
+    implementation files('C:/Users/Usuario/AndroidStudioProjects/poi-4.1.0/jars 4.1.0/poi-4.1.0/poi-scratchpad-4.1.0.jar')
+    //noinspection GradlePath
+    implementation files('C://Users/Usuario/AndroidStudioProjects/poi-4.1.0/jars 4.1.0/poi-4.1.0/poi-excelant-4.1.0.jar')
+    //noinspection GradleDependency
+    implementation 'org.apache.poi:poi-ooxml:4.1.0'
+
+
+}
+ext {
+    arcgisVersion = '100.15.3'
 }
